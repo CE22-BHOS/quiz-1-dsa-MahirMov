@@ -1,0 +1,75 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+class mystck {
+private:
+    stack<int> mystck;
+    int min_elem;
+
+public:
+    void myPush(int x) {
+        if (mystck.empty()) {
+            min_elem = x;
+            mystck.push(x);
+            return;
+        }
+
+        if (x < min_elem) {
+            int Y = 2 * x - min_elem;
+            mystck.push(Y);
+            min_elem = x;
+        } else {
+            mystck.push(x);
+        }
+    }
+
+    void myPop() {
+        if (mystck.empty()) return;
+
+        int topElement = mystck.top();
+        if (topElement < min_elem) {
+            min_elem = 2 * min_elem - topElement;
+        }
+        mystck.pop();
+    }
+
+    int myTop() {
+        if (mystck.empty()) return 0;
+
+        if (mystck.top() < min_elem) {
+            return min_elem;
+        } else {
+            return mystck.top();
+        }
+    }
+
+    int myGetMin() {
+        if (!mystck.empty()) return min_elem;
+        else return 0;
+    }
+};
+
+int main() {
+    mystck mystckk;
+
+    mystckk.myPush(1);
+    mystckk.myPush(2);
+    mystckk.myPush(3);
+    mystckk.myPush(4);
+    mystckk.myPush(5);
+
+    cout << mystckk.myTop() << endl;
+
+    mystckk.myPop();
+    cout << mystckk.myTop() << endl;
+
+    mystckk.myPush(1);
+    cout << mystckk.myTop() << endl;
+
+    mystckk.myPop();
+    cout << mystckk.myTop() << endl;
+
+    return 0;
+}
